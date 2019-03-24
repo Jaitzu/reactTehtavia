@@ -7,15 +7,25 @@ import './App.css';
 class App extends Component {
     state = {
         items: []
-    }
+    };
 
     componentDidMount() {
-        fetch("./test.json").then(res => res.json())
+        fetch("http://media.mw.metropolia.fi/wbma/media").then(res => res.json())
             .then(
                 (result) => {
                     console.log(result);
-                    this.setState({items: result})
-                    });
+            Promise.all(result.map(item => {
+                return fetch("http://media.mw.metropolia.fi/wbma/media/" + item.file_id).
+                then(response => {
+                    return response.json();
+                });
+            })).then(items => {
+                console.log(items);
+                this.setState({items: items})
+                // save items to state
+            });
+
+        });
 
 
     }
@@ -24,7 +34,7 @@ class App extends Component {
         console.log(this.state.items)
     return (
       <div className="App">
-          <Pic  items={this.state.items}/>
+          <Pic  item={this.state.items}/>
       </div>
     );
   }
