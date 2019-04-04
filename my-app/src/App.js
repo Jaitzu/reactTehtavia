@@ -6,11 +6,22 @@ import Nav from './components/Nav.js'
 import Home from './views/Home.js'
 import Profile from './views/Profile.js';
 import Single from './views/Single';
+import Logout from './views/Logout';
+import Login from './views/Login';
 
 
 class App extends Component {
     state = {
-        items: []
+        items: [],
+        user: null,
+    };
+    setUser = (user) => {
+        //hea profiilikuva ja siitä se user-objektiin
+        this.setState({user});
+    };
+
+    checkLogin = () => {
+        return this.state.user !== null;
     };
 
     componentDidMount() {
@@ -24,17 +35,21 @@ class App extends Component {
     render() {
         console.log(this.state.items)
     return (
-        <Router>
+        <Router basename='/~janneenu/ajaxlogin/build'>
       <div className="App">
-          <Route exact path="./" render={props =>(
-          <React.Fragment>
-          <Nav/>
-          <Home item={this.state.items}/>
-          </React.Fragment>
+          <Nav checkLogin={this.checkLogin}/>
+          <Route exact path="/home" render={(props) =>(
+          <Home {...props} item={this.state.items}/>
           )}/>
-          <Route path="./Profile" component={Profile} />
-          <Route path="./Single" render={(props) => (
+          <Route path="/Profile" component={Profile} />
+          <Route path="/Single" render={(props) => (
               <Single {...props} file={this.state}/>
+          )}/>
+          <Route exact path="/" render={(props) => (
+              <Login {...props} setUser={this.setUser}/>
+          )}/>
+          <Route path="/logout" render={(props) => (
+              <Logout {...props} setUser={this.setUser}/>
           )}/>
 
       </div>
