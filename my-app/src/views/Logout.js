@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 class Logout extends Component {
 
   componentDidMount() {
-    this.props.setUser(null);
-    localStorage.removeItem('token');
+    localStorage.removeItem('token','user');
     this.props.history.push('/');
   }
 

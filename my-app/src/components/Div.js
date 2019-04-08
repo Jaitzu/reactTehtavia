@@ -1,29 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import FullScreen from '@material-ui/icons/Fullscreen';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
+const style = {
+    height: "100%",
+    width: "100%",
+    margin: "1em",
+    textAlign: 'center',
+    display: 'inline-block',
+};
 
 
 class Div extends Component {
 
+
     render() {
 
-        return this.props.item.map((item, i) => (
+        return this.props.item.map((items, i) => (
 
-            <div key={i}>
-                <h1>{item.title}</h1>
-                <img src={'http://media.mw.metropolia.fi/wbma/uploads/' + item.thumbnails.w160} alt={"kuva"}/>
-                <p>{item.description}</p>
+            <Grid item xs={4} key={i}>
+                <Paper style={style}>
+                <h1>{items.title}</h1>
+                <img src={'http://media.mw.metropolia.fi/wbma/uploads/' + items.thumbnails.w160} alt={"kuva"}/>
+                <p>{items.description}</p>
                 <Link to={{
                     pathname: "/Single",
                     state: {
-                        id: item.file_id
+                        id: items.file_id
                     }
-                }}>View</Link>
-                <p>/</p>
-                <a href={'http://media.mw.metropolia.fi/wbma/uploads/' + item.filename}>full size picture</a>
-
-            </div>
+                }}><FullScreen/></Link>
+                </Paper>
+            </Grid>
         ));
     }
 }

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Nav from '../components/Nav.js';
 import {getSingleMedia} from "../utils/MediaAPI";
 
 class Single extends Component {
@@ -24,7 +23,6 @@ class Single extends Component {
     render() {
         return (
             <React.Fragment>
-                <Nav/>
                 <h1>{this.state.file.title}</h1>
                 <img src={this.mediaUrl + this.state.file.filename}
                      alt={this.state.file.title}/>
