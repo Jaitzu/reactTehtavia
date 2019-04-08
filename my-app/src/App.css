@@ -37,6 +37,6 @@ ul{
 nav{
   text-align: left;
 }
-paper{
-height: 100%;
+#register{
+  display:none;
 }

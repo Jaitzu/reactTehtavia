@@ -61,12 +61,20 @@ return response.json();
 };
 
 const register = (user) => {
+    const userInfo = {
+           username: user.username,
+            password: user.password,
+            email: user.email,
+            full_name: user.full_name,
+        }
+
+
 const settings = {
 method: 'POST',
 headers: {
  'Content-Type': 'application/json',
 },
-body: JSON.stringify(user),
+body: JSON.stringify(userInfo),
 };
 return fetch(url + 'users', settings).then(response => {
 return response.json();
@@ -84,6 +92,13 @@ return response.json();
 });
 }
 
+const checkUser = (name) => {
+    console.log(name)
+    return fetch(url + 'users/username/' + name  ).then(response => {
+
+        return response.json();
+    });
+}
 
 
 
@@ -94,3 +109,4 @@ export{login}
 export{register}
 export{getUser}
 export{getProfilePic}
+export{checkUser}

@@ -55,7 +55,7 @@ class App extends Component {
 
     render() {
     return (
-        <Router basename='/~janneenu/ajaxlogin/build'>
+        <Router basename='/~janneenu/ajaxfroms/build'>
       <div className="App">
         <CssBaseline />
         <Nav checkLogin={this.checkLogin}/>
