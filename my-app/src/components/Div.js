@@ -6,8 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 const style = {
-    height: "100%",
-    width: "100%",
+    maxHeight: "90%",
+    maxWidth: "90%",
+    minHeight: "90%",
+    minWidth: "90%",
     margin: "1em",
     textAlign: 'center',
     display: 'inline-block',
@@ -24,7 +26,16 @@ class Div extends Component {
             <Grid item xs={4} key={i}>
                 <Paper style={style}>
                 <h1>{items.title}</h1>
-                <img src={'http://media.mw.metropolia.fi/wbma/uploads/' + items.thumbnails.w160} alt={"kuva"}/>
+                    {(items.thumbnails !== undefined
+                        &&
+                        <img src={'http://media.mw.metropolia.fi/wbma/uploads/' + items.thumbnails.w160} alt={"kuva"}/>)
+                    ||
+                    (items.screenshot !== undefined
+                        &&
+                        <img src={'http://media.mw.metropolia.fi/wbma/uploads/' + items.screenshot} alt={"kuva"}/>)
+                    ||
+                        <img src={"http://placekitten.com/400/400"} alt={items.title}/>
+                    }
                 <p>{items.description}</p>
                 <Link to={{
                     pathname: "/Single",
@@ -42,3 +53,4 @@ Div.propTypes ={
 }
 
 export default Div;
+

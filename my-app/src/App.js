@@ -9,6 +9,7 @@ import Single from './views/Single.js';
 import Logout from './views/Logout.js';
 import Login from './views/Login.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Upload from './views/Uploads.js';
 
 class App extends Component {
     state = {
@@ -37,25 +38,30 @@ class App extends Component {
             })
 
   };
+    setUserLogout = (user) => {
+        this.setState({user});
+    };
 
   checkLogin = () => {
     return this.state.user !== null;
   };
+getMedia=()=>{
+  getAllMedia().then(pics =>{
+    this.setState({
+      items:pics})
 
+  })
+}
     componentDidMount() {
-        console.log(localStorage.getItem('user'))
-       getAllMedia().then(pics =>{
-           this.setState({
-               user: localStorage.getItem('user'),
-               items:pics})
-           console.log(this.state.items)
-       })
+this.getMedia();
+
 
     }
 
+
     render() {
     return (
-        <Router basename='/~janneenu/ajaxfroms/build'>
+        <Router basename='/~janneenu/ajaxFile/build'>
       <div className="App">
         <CssBaseline />
         <Nav checkLogin={this.checkLogin}/>
@@ -64,7 +70,7 @@ class App extends Component {
           <Home {...props} item={this.state.items}/>
 
           )}/>
-          <Route path="/profile" render={(props) => (
+          <Route path="/Profile" render={(props) => (
               <Profile {...props} user={this.state.user}/>
           )}/>
           <Route path="/Single" render={(props) => (
@@ -74,8 +80,12 @@ class App extends Component {
             <Login {...props} setUser={this.setUser}/>
         )}/>
 
-        <Route path="/logout" render={(props) => (
-            <Logout {...props} />
+        <Route exact path="/Uploads" render={(props) => (
+            <Upload{...props} getMedia={this.getMedia}/>
+        )}/>
+
+        <Route path="/Logout" render={(props) => (
+            <Logout {...props} setUserLogout={this.setUserLogout}/>
         )}/>
 
       </div>
@@ -85,3 +95,6 @@ class App extends Component {
 }
 
 export default App;
+
+
+

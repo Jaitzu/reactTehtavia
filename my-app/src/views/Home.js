@@ -6,7 +6,7 @@ const Home = (props) => {
     return (
         <React.Fragment>
             <h1>Home</h1>
-            <Grid container spacing={16}>
+            <Grid container spacing={0}>
             <Div item={props.item}/>
             </Grid>
 

@@ -5,6 +5,7 @@ class Logout extends Component {
 
   componentDidMount() {
     localStorage.removeItem('token','user');
+    this.props.setUserLogout(null);
     this.props.history.push('/');
   }
 
@@ -18,7 +19,7 @@ class Logout extends Component {
 }
 
 Logout.propTypes = {
-  setUser: PropTypes.func,
+  setUserLogout: PropTypes.func,
   history: PropTypes.object,
 };
 

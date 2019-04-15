@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {login, register, getUser, checkUser} from '../utils/MediaAPI';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 class Login extends Component {
@@ -14,6 +13,7 @@ class Login extends Component {
       full_name: '',
     },
     toggleForm: true,
+    validUser: true,
 
   };
 
