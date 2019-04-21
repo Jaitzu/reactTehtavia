@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
-import {getAllMedia, getProfilePic} from "./utils/MediaAPI";
+import {getAllMedia, getProfilePic, getUser} from "./utils/MediaAPI";
 import Nav from './components/Nav.js'
 import Home from './views/Home.js'
 import Profile from './views/Profile.js';
@@ -10,6 +10,8 @@ import Logout from './views/Logout.js';
 import Login from './views/Login.js';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Upload from './views/Uploads.js';
+import MyFiles from './views/MyFiles.js';
+import Modify from './views/Modify.js';
 
 class App extends Component {
     state = {
@@ -54,6 +56,12 @@ getMedia=()=>{
 }
     componentDidMount() {
 this.getMedia();
+        if (this.state.user === null && localStorage.getItem('token') !== null) {
+            getUser(localStorage.getItem('token')).then(response => {
+                this.setUser(response);
+                console.log(this.state.user)
+            });
+        }
 
 
     }
@@ -61,7 +69,7 @@ this.getMedia();
 
     render() {
     return (
-        <Router basename='/~janneenu/ajaxFile/build'>
+        <Router basename='/~janneenu/ajaxPlayer/build'>
       <div className="App">
         <CssBaseline />
         <Nav checkLogin={this.checkLogin}/>
@@ -88,6 +96,12 @@ this.getMedia();
             <Logout {...props} setUserLogout={this.setUserLogout}/>
         )}/>
 
+          <Route path="/MyFiles" render={() => (
+              <MyFiles/>
+          )}/>
+        <Route exact path="/Modify" render={(props) => (
+            <Modify{...props} file={this.state} />
+        )}/>
       </div>
         </Router>
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import {Redirect} from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 const styles = {
     media: {
@@ -21,11 +20,20 @@ const Profile = (props) => {
         <React.Fragment>
 
             <h1>Profile</h1>
-            <img src={'http://media.mw.metropolia.fi/wbma/uploads/' + props.user.profPic.filename} className={classes.media}   alt='Ei ole'/>
+          {(!props.user.profPic
+          &&
+              <img src={"http://placekitten.com/400/400"} alt={'kisu'}/>)
+          ||
+
+          <img src={'http://media.mw.metropolia.fi/wbma/uploads/' + props.user.profPic.filename} className={classes.media}   alt='Ei ole'/>
+
+          }
 
             <h2>{username}</h2>
             <p>{email}</p>
             <p>{full_name}</p>
+
+
 
         </React.Fragment>
     );

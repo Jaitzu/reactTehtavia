@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import FullScreen from '@material-ui/icons/Fullscreen';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import {getDescription} from "../utils/MediaAPI";
 
 const style = {
     maxHeight: "90%",
@@ -36,7 +37,7 @@ class Div extends Component {
                     ||
                         <img src={"http://placekitten.com/400/400"} alt={items.title}/>
                     }
-                <p>{items.description}</p>
+                <p>{getDescription(items.description)}</p>
                 <Link to={{
                     pathname: "/Single",
                     state: {

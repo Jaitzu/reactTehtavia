@@ -91,7 +91,18 @@ return fetch(url + 'users/user', settings).then(response => {
 return response.json();
 });
 }
+const getUserId = (userId,token) => {
+  console.log(userId)
+  const settings = {
+    headers: {
+      'x-access-token': token,
+    }
+  }
+  return fetch(url + 'users/' + userId, settings   ).then(response => {
 
+    return response.json();
+  });
+}
 const checkUser = (name) => {
     console.log(name)
     return fetch(url + 'users/username/' + name  ).then(response => {
@@ -100,13 +111,81 @@ const checkUser = (name) => {
     });
 }
 
+const getFilters = (text) => {
+    const pattern = '\\[f\\](.*?)\\[\\/f\\]';
+    const re = new RegExp(pattern);
+    try {
+        return JSON.parse(re.exec(text)[1]);
+    } catch (e) {
+        // console.log(e);
+        return ''
+    }
+};
+const getDescription = (text) => {
+    console.log(text)
+    const pattern = '\\[d\\](.*?)\\[\\/d\\]';
+    const re = new RegExp(pattern);
+    try {
+      console.log((re.exec(text)[1]))
+        return re.exec(text)[1];
+    } catch (e) {
+        console.log(e);
+        return text
+    }
+};
+
+const getUserMedia = (token) => {
+    const settings = {
+        headers: {
+            'x-access-token': token,
+        }
+    };
+    return fetch(url + 'media/user', settings).then(res => {
+        return res.json()
+    }).then((result) => {
+        console.log(result);
+        return Promise.all(result.map(item => {
+            return fetch(url + 'media/' + item.file_id).then(response => {
+                return response.json();
+            });
+        })).then(items => {
+            console.log(items);
+            return items;
+            // save items to state
+        });
+    })
+}
+
+const deleteImg = (id) => {
+  console.log(id)
+const token = localStorage.getItem('token');
+  const settings = {
+    method: 'DELETE',
+    headers: {
+      'x-access-token': token,
+    }
+  };
+  return fetch(url + 'media/' + id, settings).then(response => {
+    return response.json();
+  });
+};
+
+
+
+
 
 
 
 export{getAllMedia}
 export{getSingleMedia}
+export{getUserMedia}
 export{login}
 export{register}
 export{getUser}
+export{getUserId}
 export{getProfilePic}
 export{checkUser}
+export{getFilters}
+export{getDescription}
+export {deleteImg}
+

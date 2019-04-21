@@ -11,6 +11,7 @@ import {withStyles, Typography} from "@material-ui/core";
 import Slider from '@material-ui/lab/Slider';
 import Grid from '@material-ui/core/Grid';
 
+
 const styles = theme => ({
   holder: {
     display: 'flex',
@@ -75,7 +76,7 @@ class Upload extends Component {
     filter: {
       brightness: 100,
       contrast: 100,
-      saturation: 100,
+      saturate: 100,
       blur: 0,
     },
 
@@ -146,14 +147,13 @@ class Upload extends Component {
   };
 
   handleFileSubmit = (evt) => {
-evt.preventDefault();
     console.log(evt);
     const fd = new FormData();
     fd.append('title', this.state.file.title);
       const description  = `[d]${this.state.file.description}[/d][f]${JSON.stringify(this.state.filter)}[/f]`
       fd.append('description', description);
     fd.append('file', this.state.file.data);
-
+    console.log(fd)
     const options = {
       method: 'POST',
       body: fd,
@@ -162,9 +162,10 @@ evt.preventDefault();
         'x-access-token': localStorage.getItem('token'),
       },
     };
-    console.log(fd);
-    fetch(this.apiUrl+'media',options).then(res => {
-      return res.json();
+    console.log(fd +' mmmmmmmmmmmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkkk')
+    console.log(options)
+     fetch(this.apiUrl+'media',options).then(response => {
+      console.log(response);
     }).then(json => {
       console.log(json);
       setTimeout( () =>{
@@ -204,9 +205,10 @@ evt.preventDefault();
     });
     const pic = {
       filter:
-        'brightness(' + this.state.filter.brightness + '%) contrast(' + this.state.filter.contrast + '%) saturate(' + this.state.filter.saturation +'%) blur(' + this.state.filter.blur +'px)'
+        'brightness(' + this.state.filter.brightness + '%) contrast(' + this.state.filter.contrast + '%) saturate(' + this.state.filter.saturate +'%) blur(' + this.state.filter.blur +'px)',
+      maxWidth:'500px'
     };
-
+console.log(pic)
 
     return (
         <React.Fragment>
@@ -251,14 +253,14 @@ evt.preventDefault();
               </Grid>
               <Grid item xs={12}
                     style={style}>
-                <Typography id="contrast-label">Saturation: {this.state.filter.saturation}%</Typography>
+                <Typography id="contrast-label">Saturation: {this.state.filter.saturate}%</Typography>
             <Slider
                 classes={{ container: classes.slider }}
-                value={this.state.filter.saturation}
+                value={this.state.filter.saturate}
                 aria-labelledby="Saturation"
                 min={0}
                 max={200}
-                onChange={this.handleSliderChange("saturation")}
+                onChange={this.handleSliderChange("saturate")}
             />
               </Grid>
               <Grid item xs={12}
